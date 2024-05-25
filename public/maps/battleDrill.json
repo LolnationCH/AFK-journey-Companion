@@ -36,12 +36,37 @@
     {
       "name": "Default",
       "description": "",
+      "artifact": "Starshard",
       "units": [
         {
           "name": "Thoran",
           "weaponlvl": 0,
-          "positionX": 0,
+          "positionX": 1,
           "positionY": 0
+        },
+        {
+          "name": "Smokey",
+          "weaponlvl": 0,
+          "positionX": 2,
+          "positionY": 0
+        },
+        {
+          "name": "Shakir",
+          "weaponlvl": 0,
+          "positionX": 1,
+          "positionY": 1
+        },
+        {
+          "name": "Odie",
+          "weaponlvl": 0,
+          "positionX": 1,
+          "positionY": 2
+        },
+        {
+          "name": "Koko",
+          "weaponlvl": 0,
+          "positionX": 2,
+          "positionY": 2
         }
       ]
     }

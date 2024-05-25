@@ -52,6 +52,7 @@ export default function LayoutDiv() {
           </select>
           <p></p>
           <MapDiv map={selectedLayout.map} loadout={selectedLoadout} />
+          <p>{selectedLoadout?.artifact}</p>
         </div>
       )}
     </div>

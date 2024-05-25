@@ -6,7 +6,10 @@ export default function GridCell(props: { i: number, unit: Unit | null }) {
   return (
     <>
       {unit && <div className='grid-cell' style={{ color: 'transparent', backgroundImage: `url(./img/characters/${unit.name.toLowerCase()}.webp)` }}>{content}</div>}
-      {!unit && <div className='grid-cell'>{content}</div>}
+      {!unit &&
+        <div className='grid-cell'>
+          {content}
+        </div>}
     </>
   );
 }

@@ -16,11 +16,15 @@
 
 .empty-grid-cell,
 .grid-cell {
-  display: inline-block;
+  display: inline-grid;
   align-items: center;
   justify-content: center;
   padding: 10px;
   margin-right: 5px;
+  min-height: 50px;
+  min-width: 50px;
+  font-size: 30px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
   background-size: contain;
 }
 
