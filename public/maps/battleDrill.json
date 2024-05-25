@@ -1,0 +1,49 @@
+{
+  "name": "Battle Drill",
+  "description": "",
+  "map": {
+    "grid": [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ],
+    "rowSkipCell": [
+      0,
+      0,
+      0,
+      2
+    ]
+  },
+  "loadouts": [
+    {
+      "name": "Default",
+      "description": "",
+      "units": [
+        {
+          "name": "Thoran",
+          "weaponlvl": 0,
+          "positionX": 0,
+          "positionY": 0
+        }
+      ]
+    }
+  ]
+}
