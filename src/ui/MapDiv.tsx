@@ -3,8 +3,8 @@ import GridCell, { EmptyGridCell } from './GridCell';
 import Unit from './Unit';
 import Loadout from './Loadout';
 
-function getLoadoutOnPosition(loadout: Loadout | null, x: number, y: number): Unit | null {
-  return loadout?.units.find(unit => unit.positionX === x && unit.positionY === y) || null;
+function getLoadoutOnPosition(loadout: Loadout | null, x: number, y: number): Unit {
+  return loadout?.units.find(unit => unit.positionX === x && unit.positionY === y) || new Unit("", 0, x, y);
 }
 
 export default function MapDiv(props: { map: Map, loadout: Loadout | null }) {

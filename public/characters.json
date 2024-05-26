@@ -1,0 +1,284 @@
+[
+  {
+    "id": "46",
+    "name": "Alsa",
+    "type": "Mauler",
+    "class": "Mage"
+  },
+  {
+    "id": "32",
+    "name": "Antandra",
+    "type": "Mauler",
+    "class": "Tank"
+  },
+  {
+    "id": "33",
+    "name": "Arden",
+    "type": "Wilder",
+    "class": "Mage"
+  },
+  {
+    "id": "11",
+    "name": "Atalanta",
+    "type": "Lightbearer",
+    "class": "Marksman"
+  },
+  {
+    "id": "3",
+    "name": "Berial",
+    "type": "Hypogean",
+    "class": "Rogue"
+  },
+  {
+    "id": "8",
+    "name": "Brutus",
+    "type": "Mauler",
+    "class": "Warrior"
+  },
+  {
+    "id": "18",
+    "name": "Bryon",
+    "type": "Wilder",
+    "class": "Marksman"
+  },
+  {
+    "id": "19",
+    "name": "Carolina",
+    "type": "Graveborn",
+    "class": "Mage"
+  },
+  {
+    "id": "1",
+    "name": "Cassadee",
+    "type": "Lightbearer",
+    "class": "Mage"
+  },
+  {
+    "id": "21",
+    "name": "Cecia",
+    "type": "Graveborn",
+    "class": "Marksman"
+  },
+  {
+    "id": "35",
+    "name": "Damian",
+    "type": "Wilder",
+    "class": "Support"
+  },
+  {
+    "id": "4",
+    "name": "Dionel",
+    "type": "Celestial",
+    "class": "Marksman"
+  },
+  {
+    "id": "16",
+    "name": "Eironn",
+    "type": "Wilder",
+    "class": "Rogue"
+  },
+  {
+    "id": "27",
+    "name": "Fay",
+    "type": "Lightbearer",
+    "class": "Support"
+  },
+  {
+    "id": "45",
+    "name": "Florabelle",
+    "type": "Wilder",
+    "class": "Warrior"
+  },
+  {
+    "id": "17",
+    "name": "Granny Dahnie",
+    "type": "Wilder",
+    "class": "Tank"
+  },
+  {
+    "id": "9",
+    "name": "Hewynn",
+    "type": "Wilder",
+    "class": "Support"
+  },
+  {
+    "id": "20",
+    "name": "Igor",
+    "type": "Graveborn",
+    "class": "Warrior"
+  },
+  {
+    "id": "36",
+    "name": "Kafra",
+    "type": "Wilder",
+    "class": "Warrior"
+  },
+  {
+    "id": "44",
+    "name": "Koko",
+    "type": "Mauler",
+    "class": "Support"
+  },
+  {
+    "id": "26",
+    "name": "Korin",
+    "type": "Lightbearer",
+    "class": "Warrior"
+  },
+  {
+    "id": "30",
+    "name": "Kruger",
+    "type": "Mauler",
+    "class": "Warrior"
+  },
+  {
+    "id": "25",
+    "name": "Lucius",
+    "type": "Lightbearer",
+    "class": "Tank"
+  },
+  {
+    "id": "13",
+    "name": "Lumont",
+    "type": "Mauler",
+    "class": "Tank"
+  },
+  {
+    "id": "34",
+    "name": "Lyca",
+    "type": "Wilder",
+    "class": "Marksman"
+  },
+  {
+    "id": "24",
+    "name": "Marilee",
+    "type": "Lightbearer",
+    "class": "Marksman"
+  },
+  {
+    "id": "23",
+    "name": "Mirael",
+    "type": "Lightbearer",
+    "class": "Mage"
+  },
+  {
+    "id": "38",
+    "name": "Niru",
+    "type": "Graveborn",
+    "class": "Support"
+  },
+  {
+    "id": "28",
+    "name": "Odie",
+    "type": "Mauler",
+    "class": "Marksman"
+  },
+  {
+    "id": "37",
+    "name": "Parisa",
+    "type": "Wilder",
+    "class": "Mage"
+  },
+  {
+    "id": "5",
+    "name": "Reinier",
+    "type": "Hypogean",
+    "class": "Support"
+  },
+  {
+    "id": "42",
+    "name": "Rhys",
+    "type": "Mauler",
+    "class": "Marksman"
+  },
+  {
+    "id": "7",
+    "name": "Rowan",
+    "type": "Lightbearer",
+    "class": "Support"
+  },
+  {
+    "id": "40",
+    "name": "Salazer",
+    "type": "Graveborn",
+    "class": "Rogue"
+  },
+  {
+    "id": "31",
+    "name": "Satrana",
+    "type": "Mauler",
+    "class": "Mage"
+  },
+  {
+    "id": "2",
+    "name": "Scarlita",
+    "type": "Celestial",
+    "class": "Warrior"
+  },
+  {
+    "id": "29",
+    "name": "Seth",
+    "type": "Mauler",
+    "class": "Rogue"
+  },
+  {
+    "id": "15",
+    "name": "Shakir",
+    "type": "Mauler",
+    "class": "Rogue"
+  },
+  {
+    "id": "39",
+    "name": "Silvina",
+    "type": "Graveborn",
+    "class": "Rogue"
+  },
+  {
+    "id": "14",
+    "name": "Smokey & Meerky",
+    "type": "Mauler",
+    "class": "Support"
+  },
+  {
+    "id": "47",
+    "name": "Soren",
+    "type": "Mauler",
+    "class": "Rogue"
+  },
+  {
+    "id": "12",
+    "name": "Temesia",
+    "type": "Lightbearer",
+    "class": "Tank"
+  },
+  {
+    "id": "10",
+    "name": "Thoran",
+    "type": "Graveborn",
+    "class": "Tank"
+  },
+  {
+    "id": "6",
+    "name": "Vala",
+    "type": "Lightbearer",
+    "class": "Rogue"
+  },
+  {
+    "id": "22",
+    "name": "Valen",
+    "type": "Lightbearer",
+    "class": "Warrior"
+  },
+  {
+    "id": "41",
+    "name": "Viperian",
+    "type": "Graveborn",
+    "class": "Mage"
+  },
+  {
+    "id": "43",
+    "name": "Walker",
+    "type": "Lightbearer",
+    "class": "Rogue"
+  }
+]

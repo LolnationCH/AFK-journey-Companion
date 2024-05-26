@@ -37,6 +37,19 @@
   color: transparent;
 }
 
+.characters-cell {
+  display: inline-grid;
+  margin: 2px;
+  background-size: contain;
+  border-image: linear-gradient(#f6b73c, #4d9f0c) 30;
+  border-width: 2px;
+  border-style: solid;
+}
+
+.characters-cell:hover {
+  transform: scale(1.2);
+}
+
 
 .grid-cell,
 .grid-cell:before {
