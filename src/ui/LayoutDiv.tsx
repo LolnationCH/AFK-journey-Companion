@@ -4,31 +4,7 @@ import LayoutFetcher from "../libs/LayoutsFetcher";
 import MapDiv from "./MapDiv";
 import Loadout from "./Loadout";
 
-import CharacterInfoFetcher from "../libs/CharacterInfoFetcher";
-import CharacterInfo from "../libs/CharacterInfo";
-
-function CharacterList() {
-  const [characters, setCharacters] = useState<CharacterInfo[]>([]);
-  useEffect(() => {
-    CharacterInfoFetcher.fetchCharacterInfo().then((characters) => {
-      // Add null character
-      characters.push(new CharacterInfo("", "0", "", ""));
-      characters.sort((a, b) => a.name.localeCompare(b.name));
-      setCharacters(characters);
-    });
-  }, []);
-
-  return (
-    <div style={{ overflow: "auto" }}>
-      {characters.map((character, index) => (
-        <div key={character.id} className="characters-cell" onClick={() => CharacterInfoFetcher.selectCharacterInfo(character.name)}>
-          <img src={`./img/characters/${character.id}_sm.webp`} alt={character.name} style={{ maxHeight: "80px" }} />
-        </div>
-      ))}
-    </div>
-  );
-}
-
+import { CharacterList } from "./CharacterList";
 
 export default function LayoutDiv() {
   let [layouts, setLayouts] = useState<Layout[]>([]);
@@ -46,57 +22,60 @@ export default function LayoutDiv() {
   const [selectedLoadout, setSelectedLoadout] = useState<Loadout | null>(null);
 
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
-      <div>
-        <select
-          value={selectedLayoutName}
-          onChange={(e) => {
-            setSelectedLayoutName(e.target.value);
-            setSelectedLayout(
-              layouts.find((layout) => layout.name === e.target.value) || null
-            );
-          }}
-        >
-          <option value="">Select a layout</option>
-          {layouts.map((layout) => (
-            <option key={layout.name} value={layout.name}>
-              {layout.name}
-            </option>
-          ))}
-        </select>
+    <>
+      <h1>Composition builder</h1>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
+        <div>
+          <select
+            value={selectedLayoutName}
+            onChange={(e) => {
+              setSelectedLayoutName(e.target.value);
+              setSelectedLayout(
+                layouts.find((layout) => layout.name === e.target.value) || null
+              );
+            }}
+          >
+            <option value="">Select a layout</option>
+            {layouts.map((layout) => (
+              <option key={layout.name} value={layout.name}>
+                {layout.name}
+              </option>
+            ))}
+          </select>
 
-        {selectedLayout && (
-          <div>
-            <h1>{selectedLayoutName}</h1>
-            <p>{selectedLayout.description}</p>
-            <select
-              value={selectedLoadoutName}
-              onChange={(e) => {
-                setSelectedLoadoutName(e.target.value);
-                setSelectedLoadout(
-                  selectedLayout.loadouts.find(
-                    (loadout) => loadout.name === e.target.value
-                  ) || null
-                );
-              }}
-            >
-              <option value="">Select a loadout</option>
-              {selectedLayout.loadouts.map((loadout) => (
-                <option key={loadout.name} value={loadout.name}>
-                  {loadout.name}
-                </option>
-              ))}
-            </select>
-            <p></p>
-            <MapDiv map={selectedLayout.map} loadout={selectedLoadout} />
-            <p>{selectedLoadout?.artifact}</p>
-          </div>
-        )}
+          {selectedLayout && (
+            <div>
+              <h1>{selectedLayoutName}</h1>
+              <p>{selectedLayout.description}</p>
+              <select
+                value={selectedLoadoutName}
+                onChange={(e) => {
+                  setSelectedLoadoutName(e.target.value);
+                  setSelectedLoadout(
+                    selectedLayout.loadouts.find(
+                      (loadout) => loadout.name === e.target.value
+                    ) || null
+                  );
+                }}
+              >
+                <option value="">Select a loadout</option>
+                {selectedLayout.loadouts.map((loadout) => (
+                  <option key={loadout.name} value={loadout.name}>
+                    {loadout.name}
+                  </option>
+                ))}
+              </select>
+              <p></p>
+              <MapDiv map={selectedLayout.map} loadout={selectedLoadout} />
+              <p>{selectedLoadout?.artifact}</p>
+            </div>
+          )}
+        </div>
+        <div>
+          <h2>Characters Selection</h2>
+          {CharacterList()}
+        </div>
       </div>
-      <div>
-        <h2>Characters Selection</h2>
-        {CharacterList()}
-      </div>
-    </div>
+    </>
   );
 }
