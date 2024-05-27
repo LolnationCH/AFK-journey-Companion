@@ -15,6 +15,16 @@
       "shell": {
         "all": false,
         "open": true
+      },
+      "fs": {
+        "all": true,
+        "scope": [
+          "**"
+        ],
+        "writeFile": false
+      },
+      "path": {
+        "all": true
       }
     },
     "windows": [

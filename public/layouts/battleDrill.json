@@ -1,5 +1,6 @@
 {
   "name": "Battle Drill",
+  "filename": "battleDrill",
   "description": "",
   "map": {
     "grid": [

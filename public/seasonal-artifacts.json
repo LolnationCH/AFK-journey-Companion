@@ -1,6 +1,34 @@
 [
   {
     "id": 10,
-    "name": "WOW"
+    "name": "Lightheal"
+  },
+  {
+    "id": 11,
+    "name": "Crescent"
+  },
+  {
+    "id": 12,
+    "name": "Quickblade"
+  },
+  {
+    "id": 13,
+    "name": "Stormcaller"
+  },
+  {
+    "id": 14,
+    "name": "Cascade"
+  },
+  {
+    "id": 15,
+    "name": "Evocation"
+  },
+  {
+    "id": 16,
+    "name": "Thunderbolt"
+  },
+  {
+    "id": 17,
+    "name": "Dashing"
   }
 ]

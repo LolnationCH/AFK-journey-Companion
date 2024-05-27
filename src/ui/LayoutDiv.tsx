@@ -12,8 +12,8 @@ export default function LayoutDiv() {
   let [layouts, setLayouts] = useState<Layout[]>([]);
 
   useEffect(() => {
-    LayoutFetcher.fetchLayouts().then((layouts) => {
-      setLayouts(layouts);
+    LayoutFetcher.fetchLayouts().then((layoutsFetched) => {
+      setLayouts(layoutsFetched);
     });
   }, []);
 
@@ -26,6 +26,23 @@ export default function LayoutDiv() {
   const [artifacts, setArtifacts] = useState<ArtifactInfo[]>([]);
   const [seasonalArtifacts, setSeasonalArtifacts] = useState<ArtifactInfo[]>([]);
   const [selectedArtifact, setSelectedArtifact] = useState<ArtifactInfo | null>(null);
+
+  let modifyLoadout = (loadout: Loadout) => {
+    if (!selectedLayout || !selectedLoadout) return;
+    let newLoadouts = selectedLayout.loadouts.filter(l => l.name !== selectedLoadout?.name);
+    newLoadouts.push(loadout);
+    selectedLayout.loadouts = newLoadouts;
+    setSelectedLayout(selectedLayout);
+    setSelectedLoadoutName(loadout.name);
+  }
+
+  const renameLoadout = () => {
+    let newName = prompt("New name for loadout : ");
+    if (!newName || !selectedLoadout) return;
+    let temp = selectedLoadout;
+    temp.name = newName;
+    modifyLoadout(temp);
+  };
 
   return (
     <>
@@ -61,7 +78,7 @@ export default function LayoutDiv() {
                 <select
                   value={selectedLoadoutName}
                   onChange={(e) => {
-                    SetSelectedLayoutOnChang(e.target.value);
+                    SetSelectedLayoutOnChange(e.target.value);
                   }}
                 >
                   <option value="">Select a loadout</option>
@@ -75,7 +92,11 @@ export default function LayoutDiv() {
               <p></p>
               <div>
                 <span className="layout-button">Add +</span>
-                <span className="layout-button">Rename ✏️</span>
+                <span className="layout-button" onClick={renameLoadout}>Rename ✏️</span>
+                <span className="layout-button" onClick={() => {
+                  if (!selectedLayout || !selectedLoadout) return;
+                  LayoutFetcher.saveLayout(selectedLayout);
+                }}>Save 💾</span>
               </div>
               <p></p>
               <MapDiv map={selectedLayout.map} loadout={selectedLoadout} modifyLoadout={setSelectedLoadout} />
@@ -84,12 +105,14 @@ export default function LayoutDiv() {
                 <select
                   value={selectedArtifact?.name}
                   onChange={(e) => {
-                    setSelectedArtifact(
-                      artifacts.find((artifact) => artifact.name === e.target.value) || null
-                    );
+                    let findArtifact = artifacts.find((artifact) => artifact.name === e.target.value);
+                    if (!findArtifact) {
+                      findArtifact = seasonalArtifacts.find((artifact) => artifact.name === e.target.value);
+                    }
+                    setSelectedArtifact(findArtifact || null);
                   }}
                   className="artifact-select"
-                  style={{ maxHeight: "50%", alignSelf: "center", maxWidth: "30%" }}
+                  style={{ maxHeight: "50%", alignSelf: "center" }}
                 >
                   {artifacts.map((artifact) => (
                     <option key={artifact.name} value={artifact.name}>
@@ -102,7 +125,6 @@ export default function LayoutDiv() {
                       {artifact.name}
                     </option>
                   ))}
-
                 </select>
               </div>
             </div>
@@ -116,14 +138,13 @@ export default function LayoutDiv() {
     </>
   );
 
-  function SetSelectedLayoutOnChang(name: string) {
+  function SetSelectedLayoutOnChange(name: string) {
     setSelectedLoadoutName(name);
     setLayout(selectedLayout?.loadouts.find((loadout) => loadout.name === name) || null);
   }
 
 
   function setLayout(loadout: Loadout | null) {
-    console.log(loadout);
     setSelectedLoadout(loadout);
     ArtifactInfoFetcher.fetchArtifactInfo().then((artifactsFetched) => {
       artifactsFetched.sort((a, b) => a.name > b.name ? 1 : -1);

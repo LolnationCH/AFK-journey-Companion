@@ -51,24 +51,25 @@ export function CharacterList() {
 
   const sortBasedOnFaction = (factionName: string) => {
     setSelectedFactionFilter(factionName);
-    if (selectedClassFilter !== "") {
-      let factionCharacters = charactersList.filter((character) => character.type === factionToAbrev[factionName] && character.class === classToAbrev[selectedClassFilter]);
-      setCharacters(modifyCharacterList(factionCharacters));
-      return;
-    }
-    let factionCharacters = charactersList.filter((character) => character.type === factionToAbrev[factionName]);
-    setCharacters(modifyCharacterList(factionCharacters));
+    sortBasedOnFactionAndClass(factionName, selectedClassFilter);
   };
 
   const sortBasedOnClass = (className: string) => {
     setSelectedClassFilter(className);
-    if (selectedFactionFilter !== "") {
-      let classCharacters = charactersList.filter((character) => character.type === factionToAbrev[selectedFactionFilter] && character.class === classToAbrev[className]);
-      setCharacters(modifyCharacterList(classCharacters));
-      return;
-    }
-    let classCharacters = charactersList.filter((character) => character.class === classToAbrev[className]);
-    setCharacters(modifyCharacterList(classCharacters));
+    sortBasedOnFactionAndClass(selectedFactionFilter, className);
+  };
+
+  const sortBasedOnFactionAndClass = (factionName: string, className: string) => {
+    setSelectedFactionFilter(factionName);
+    setSelectedClassFilter(className);
+
+    let filteredCharacters = charactersList.filter((character) => {
+      const factionMatch = factionName === "" || character.type === factionToAbrev[factionName];
+      const classMatch = className === "" || character.class === classToAbrev[className];
+      return factionMatch && classMatch;
+    });
+
+    setCharacters(modifyCharacterList(filteredCharacters));
   };
 
   return (
@@ -80,7 +81,7 @@ export function CharacterList() {
         <div className="faction-icon" onClick={() => sortBasedOnFaction("light")}> <img src="./img/factions/faction_light.webp"></img></div>
         <div className="faction-icon" onClick={() => sortBasedOnFaction("mauler")}><img src="./img/factions/faction_mauler.webp"></img></div>
         <div className="faction-icon" onClick={() => sortBasedOnFaction("wilder")}><img src="./img/factions/faction_wilder.webp"></img></div>
-        <div className="faction-icon" onClick={() => { setCharacters(charactersList); setSelectedFactionFilter("") }}><img src="./img/factions/faction_all.webp"></img></div>
+        <div className="faction-icon" onClick={() => { setSelectedFactionFilter(""); sortBasedOnFactionAndClass("", selectedClassFilter) }}><img src="./img/factions/faction_all.webp"></img></div>
         <span>Currently selected character : {selectedCharacter?.name}</span>
       </div>
       <div>
@@ -90,7 +91,7 @@ export function CharacterList() {
         <div className="faction-icon" onClick={() => sortBasedOnClass("support")}><img src="./img/class/class_support.webp"></img></div>
         <div className="faction-icon" onClick={() => sortBasedOnClass("tank")}><img src="./img/class/class_tank.webp"></img></div>
         <div className="faction-icon" onClick={() => sortBasedOnClass("warrior")}><img src="./img/class/class_warrior.webp"></img></div>
-        <div className="faction-icon" onClick={() => { setCharacters(charactersList); setSelectedClassFilter("") }}><img src="./img/class/class_all.webp"></img></div>
+        <div className="faction-icon" onClick={() => { setSelectedClassFilter(""); sortBasedOnFactionAndClass(selectedFactionFilter, "") }}><img src="./img/class/class_all.webp"></img></div>
       </div>
       {characters.map((character, _) => (
         <div key={character.id} className="characters-cell" onClick={() => {
