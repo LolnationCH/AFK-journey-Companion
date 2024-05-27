@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import CharacterInfoFetcher from "../libs/CharacterInfoFetcher";
 import Unit from "./Unit";
 
-export default function GridCell(props: { i: number, unit: Unit }) {
-  const { i, unit } = props;
+export default function GridCell(props: { i: number, unit: Unit, modifyUnit: (unit: Unit) => void }) {
+  const { i, unit, modifyUnit } = props;
   let content = i < 10 ? `0${i}` : i;
   const [unitId, setUnitId] = useState("0");
 
@@ -19,6 +19,7 @@ export default function GridCell(props: { i: number, unit: Unit }) {
     } else {
       unit.name = newUnit.name;
     }
+    modifyUnit(unit);
     fetchCharacterId(unit, setUnitId);
   };
   return (

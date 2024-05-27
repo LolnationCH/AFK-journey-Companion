@@ -30,7 +30,7 @@ export default function LayoutDiv() {
   return (
     <>
       <h1>Composition builder</h1>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr" }}>
         <div>
           <span>
             <span>Layout Selection : </span>
@@ -78,7 +78,7 @@ export default function LayoutDiv() {
                 <span className="layout-button">Rename ✏️</span>
               </div>
               <p></p>
-              <MapDiv map={selectedLayout.map} loadout={selectedLoadout} />
+              <MapDiv map={selectedLayout.map} loadout={selectedLoadout} modifyLoadout={setSelectedLoadout} />
               <div style={{ display: "grid", gridTemplateColumns: "100px 1fr" }}>
                 <img src={`./img/artifacts/arti_${selectedArtifact?.id}.webp`} title={`${selectedArtifact?.name}`} />
                 <select
