@@ -31,6 +31,10 @@ export default class Loadout {
     this.artifact = artifact;
   }
 
+  static newFromUi(name: string) {
+    return new Loadout([], name, "", artifactType.starshard);
+  }
+
   static fromJson(json: any): Loadout {
     return new Loadout(json.units, json.name, json.description, json.artifact);
   }

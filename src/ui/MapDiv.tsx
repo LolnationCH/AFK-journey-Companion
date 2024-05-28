@@ -5,21 +5,16 @@ import Loadout from './Loadout';
 import { useState } from 'react';
 
 function getLoadoutOnPosition(loadout: Loadout | null, x: number, y: number): Unit {
+  // console.log(loadout);
   return loadout?.units.find(unit => unit.positionX === x && unit.positionY === y) || new Unit("", 0, x, y);
 }
 
-export default function MapDiv(props: { map: Map, loadout: Loadout | null, modifyLoadout: (loadout: Loadout) => void }) {
+export default function MapDiv(props: { map: Map, loadout: Loadout | null, modifyLoadout: (unit: Unit) => void }) {
   const { map, loadout, modifyLoadout } = props;
   const [unitsState, setUnitsState] = useState<Unit[]>(loadout?.units || []);
 
   let modifyUnit = (unit: Unit) => {
-    if (!loadout) return;
-
-    let newUnits = unitsState.filter(u => u.positionX !== unit.positionX || u.positionY !== unit.positionY);
-    newUnits.push(unit);
-    setUnitsState(newUnits);
-    loadout.units = newUnits;
-    modifyLoadout(loadout);
+    modifyLoadout(unit);
   }
 
   let i = 1;

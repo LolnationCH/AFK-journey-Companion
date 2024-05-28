@@ -8,6 +8,10 @@ import { CharacterList } from "./CharacterList";
 import ArtifactInfo from "../libs/ArtifactInfo";
 import ArtifactInfoFetcher from "../libs/ArtifactInfoFetcher";
 import { appWindow, LogicalSize } from '@tauri-apps/api/window';
+import { appLocalDataDir } from '@tauri-apps/api/path';
+import { invoke } from '@tauri-apps/api/tauri'
+const appLocalDataDirPath = await appLocalDataDir();
+import Unit from "./Unit";
 
 export default function LayoutDiv() {
   const [listVisible, setListVisible] = useState<boolean>(true);
@@ -54,13 +58,45 @@ export default function LayoutDiv() {
     if (compBuilderGrid) {
       if (tempListVisible) {
         compBuilderGrid.style.gridTemplateColumns = "1fr";
-        await appWindow.setSize(new LogicalSize(500, 600));
+        return appWindow.isMaximized().then((maximized) => {
+          if (!maximized) {
+            return appWindow.setSize(new LogicalSize(500, 600));
+          }
+        });
       }
       else {
         compBuilderGrid.style.gridTemplateColumns = "1fr 2fr";
-        await appWindow.setSize(new LogicalSize(1300, 600));
+        return appWindow.isMaximized().then((maximized) => {
+          if (!maximized) {
+            return appWindow.setSize(new LogicalSize(1300, 600));
+          }
+        });
+
       }
     }
+  }
+
+  const addNewLoadout = () => {
+    if (!selectedLayout) return;
+    let newLoadoutName = prompt("New loadout name : ");
+    if (!newLoadoutName) return;
+
+    let newLoadout = Loadout.newFromUi(newLoadoutName);
+    let newLoadouts = selectedLayout.loadouts;
+    newLoadouts.push(newLoadout);
+    selectedLayout.loadouts = newLoadouts;
+    setSelectedLayout(selectedLayout);
+    setSelectedLoadout(newLoadout);
+    setSelectedLoadoutName(newLoadout.name);
+  }
+
+  const modifyLoadoutUnit = (unit: Unit) => {
+    if (!selectedLoadout) return;
+
+    let newUnits = selectedLoadout.units.filter(u => u.positionX !== unit.positionX || u.positionY !== unit.positionY);
+    newUnits.push(unit);
+    selectedLoadout.units = newUnits;
+    setSelectedLoadout(selectedLoadout);
   }
 
   return (
@@ -110,7 +146,7 @@ export default function LayoutDiv() {
               </span>
               <p></p>
               <div>
-                <span className="layout-button">Add +</span>
+                <span className="layout-button" onClick={addNewLoadout}>Add +</span>
                 <span className="layout-button" onClick={renameLoadout}>Rename ✏️</span>
                 <span className="layout-button" onClick={() => {
                   if (!selectedLayout || !selectedLoadout) return;
@@ -119,7 +155,7 @@ export default function LayoutDiv() {
                 <span className="layout-button" onClick={toggleListVisibility}>Toggle list</span>
               </div>
               <p></p>
-              <MapDiv map={selectedLayout.map} loadout={selectedLoadout} modifyLoadout={setSelectedLoadout} />
+              <MapDiv map={selectedLayout.map} loadout={selectedLoadout} modifyLoadout={modifyLoadoutUnit} />
               <div style={{ display: "grid", gridTemplateColumns: "100px 1fr" }}>
                 <img src={`./img/artifacts/arti_${selectedArtifact?.id}.webp`} title={`${selectedArtifact?.name}`} />
                 <select
@@ -146,6 +182,9 @@ export default function LayoutDiv() {
                     </option>
                   ))}
                 </select>
+                <span className="layout-button" style={{ width: "125px" }} onClick={async () => {
+                  invoke("open_explorer_folder", { fullPath: appLocalDataDirPath.slice(0, -1) });
+                }}>Open data folder</span>
               </div>
             </div>
           )}
