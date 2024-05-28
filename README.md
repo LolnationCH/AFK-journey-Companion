@@ -1,7 +1,5 @@
-# Tauri + React + Typescript
+# AFK-journey-Companion
 
-This template should help get you started developing with Tauri, React and Typescript in Vite.
+AFF journey companion.
 
-## Recommended IDE Setup
-
-- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+For now, only contains a team builder on a selection of layouts. Planned to add more features in the future.
