@@ -131,6 +131,15 @@ h2 {
   text-align: center;
 }
 
+.div-link {
+  color: #f6b73c;
+  text-decoration: underline;
+}
+
+.div-link:hover {
+  cursor: pointer;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     color: #f6f6f6;
