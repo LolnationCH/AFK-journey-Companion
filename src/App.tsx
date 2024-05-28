@@ -12,6 +12,8 @@ function App() {
   return (
     <div>
       <LayoutDiv />
+      <div id="footer">
+        <hr />Creator <b>LolnationCH</b> : <a href="https://github.com/LolnationCH/AFK-journey-Companion">Source Code</a></div>
     </div>
   );
 }

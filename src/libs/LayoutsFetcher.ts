@@ -29,6 +29,7 @@ export default class LayoutFetcher {
   }
 
   static async saveLayout(layout: Layout) {
+    console.log({ "save": "save", layout });
     // Save the layout to the local data directory
     return join("layouts", `${layout.filename}.json`).then((path) => {
       createDir("layouts", { dir: BaseDirectory.AppLocalData, recursive: true }).then(() => {

@@ -124,6 +124,13 @@ h2 {
   clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
 }
 
+#footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     color: #f6f6f6;
@@ -139,5 +146,9 @@ h2 {
     appearance: none;
     background-color: #0f0f0f;
     color: #e0e0e0;
+  }
+
+  a {
+    color: #f6b73c;
   }
 }
