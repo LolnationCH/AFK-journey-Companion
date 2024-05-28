@@ -1,0 +1,34 @@
+{
+  "name": "Supreme Arena 1",
+  "filename": "supremeArena1",
+  "description": "",
+  "map": {
+    "grid": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ],
+    "rowSkipCell": [
+      0,
+      0,
+      0,
+      2
+    ]
+  },
+  "loadouts": []
+}
