@@ -25,6 +25,9 @@
       },
       "path": {
         "all": true
+      },
+      "window": {
+        "setSize": true
       }
     },
     "windows": [

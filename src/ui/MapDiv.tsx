@@ -28,7 +28,7 @@ export default function MapDiv(props: { map: Map, loadout: Loadout | null, modif
       {map.grid.map((row, y) => {
         let cellToSkip = map.getCellRowStart(y);
         return (
-          <div key={y} style={{ marginLeft: `${y % 2 == 1 ? 0 : 22}px`, marginBottom: '-7px' }}>
+          <div key={y} style={{ marginLeft: `${y % 2 == 1 ? 0 : 40}px`, marginBottom: '-7px' }}>
             {new Array(cellToSkip).fill(0).map((_, i) => <EmptyGridCell key={i} />)}
             {row.map((_, x) => (
               <GridCell key={x} i={i++} unit={getLoadoutOnPosition(loadout, x, y)} modifyUnit={modifyUnit} />

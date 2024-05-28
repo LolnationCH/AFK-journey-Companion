@@ -31,6 +31,11 @@ h2 {
   font-size: 30px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   background-size: contain;
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
+  user-select: none;
 }
 
 .grid-cell {
@@ -42,11 +47,27 @@ h2 {
   color: transparent;
 }
 
+.grid-cell:hover {
+  cursor: pointer;
+  background-color: #f6f6f6;
+}
+
 .layout-button {
   margin-right: 10px;
   padding: 5px;
   border: 2px solid #acacac;
-  border-radius: 20%;
+  border-radius: 10%;
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+.layout-button:hover {
+  cursor: pointer;
+  border: 2px solid #ffffff;
+  background-color: #f6f6f633;
 }
 
 .characters-cell {
@@ -60,6 +81,7 @@ h2 {
 
 .characters-cell:hover {
   transform: scale(1.2);
+  cursor: pointer;
 }
 
 .artifact-select {
@@ -92,8 +114,8 @@ h2 {
 
 .faction-icon:hover {
   transform: scale(1.1);
+  cursor: pointer;
 }
-
 
 .grid-cell,
 .grid-cell:before {

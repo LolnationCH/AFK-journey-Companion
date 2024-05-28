@@ -7,9 +7,10 @@ import Loadout from "./Loadout";
 import { CharacterList } from "./CharacterList";
 import ArtifactInfo from "../libs/ArtifactInfo";
 import ArtifactInfoFetcher from "../libs/ArtifactInfoFetcher";
+import { appWindow, LogicalSize } from '@tauri-apps/api/window';
 
 export default function LayoutDiv() {
-  let [layouts, setLayouts] = useState<Layout[]>([]);
+  const [listVisible, setListVisible] = useState<boolean>(true);
 
   useEffect(() => {
     LayoutFetcher.fetchLayouts().then((layoutsFetched) => {
@@ -17,6 +18,7 @@ export default function LayoutDiv() {
     });
   }, []);
 
+  const [layouts, setLayouts] = useState<Layout[]>([]);
   const [selectedLayoutName, setSelectedLayoutName] = useState<string>("");
   const [selectedLayout, setSelectedLayout] = useState<Layout | null>(null);
 
@@ -44,11 +46,28 @@ export default function LayoutDiv() {
     modifyLoadout(temp);
   };
 
+  const toggleListVisibility = async () => {
+    let tempListVisible = listVisible;
+    setListVisible(!listVisible);
+
+    let compBuilderGrid = document?.getElementById('compBuilderGrid');
+    if (compBuilderGrid) {
+      if (tempListVisible) {
+        compBuilderGrid.style.gridTemplateColumns = "1fr";
+        await appWindow.setSize(new LogicalSize(500, 600));
+      }
+      else {
+        compBuilderGrid.style.gridTemplateColumns = "1fr 2fr";
+        await appWindow.setSize(new LogicalSize(1300, 600));
+      }
+    }
+  }
+
   return (
-    <>
+    <div id="compBuilder" style={{ height: "600px" }}>
       <h1>Composition builder</h1>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr" }}>
-        <div>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr", maxHeight: "600px" }} id="compBuilderGrid">
+        <div id="layoutDiv">
           <span>
             <span>Layout Selection : </span>
             <select
@@ -97,6 +116,7 @@ export default function LayoutDiv() {
                   if (!selectedLayout || !selectedLoadout) return;
                   LayoutFetcher.saveLayout(selectedLayout);
                 }}>Save 💾</span>
+                <span className="layout-button" onClick={toggleListVisibility}>Toggle list</span>
               </div>
               <p></p>
               <MapDiv map={selectedLayout.map} loadout={selectedLoadout} modifyLoadout={setSelectedLoadout} />
@@ -130,12 +150,12 @@ export default function LayoutDiv() {
             </div>
           )}
         </div>
-        <div>
+        <div style={{ visibility: listVisible ? "visible" : "hidden", width: listVisible ? "100%" : "0%", height: listVisible ? "100%" : "0%" }}>
           <h2>Characters Selection</h2>
           {CharacterList()}
         </div>
       </div>
-    </>
+    </div>
   );
 
   function SetSelectedLayoutOnChange(name: string) {
