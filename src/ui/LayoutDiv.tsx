@@ -88,6 +88,8 @@ export default function LayoutDiv() {
     setSelectedLayout(selectedLayout);
     setSelectedLoadout(newLoadout);
     setSelectedLoadoutName(newLoadout.name);
+    let newSelectedArtifact = newLoadout.artifact ? artifacts.find((artifact) => artifact.name === newLoadout.artifact) || null : null;
+    setSelectedArtifact(newSelectedArtifact);
   }
 
   const modifyLoadoutUnit = (unit: Unit) => {
