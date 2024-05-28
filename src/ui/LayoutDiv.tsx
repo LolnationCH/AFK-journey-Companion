@@ -67,7 +67,7 @@ export default function LayoutDiv() {
         compBuilderGrid.style.gridTemplateColumns = "1fr";
         return appWindow.isMaximized().then((maximized) => {
           if (!maximized) {
-            return appWindow.setSize(new LogicalSize(500, 600));
+            return appWindow.setSize(new LogicalSize(500, 800));
           }
         });
       }
@@ -75,7 +75,7 @@ export default function LayoutDiv() {
         compBuilderGrid.style.gridTemplateColumns = "1fr 2fr";
         return appWindow.isMaximized().then((maximized) => {
           if (!maximized) {
-            return appWindow.setSize(new LogicalSize(1300, 600));
+            return appWindow.setSize(new LogicalSize(1300, 800));
           }
         });
 
@@ -176,7 +176,7 @@ export default function LayoutDiv() {
                     }
                   }}
                   className="artifact-select"
-                  style={{ maxHeight: "50%", alignSelf: "center" }}
+                  style={{ maxHeight: "50%", alignSelf: "center", maxWidth: "200px" }}
                 >
                   {artifacts.map((artifact) => (
                     <option key={artifact.name} value={artifact.name}>
