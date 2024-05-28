@@ -107,6 +107,9 @@ function sortBasedOnClass(
     if (!temp.includes(className)) {
       temp.push(className);
     }
+    else {
+      temp = temp.filter((c) => c !== className);
+    }
     setSelectedClassFilter(temp);
     sortBasedOnFactionAndClass(selectedFactionFilter, temp);
   };
@@ -125,6 +128,9 @@ function sortBasedOnFaction(
     let temp = [...selectedFactionFilter];
     if (!temp.includes(factionName)) {
       temp.push(factionName);
+    }
+    else {
+      temp = temp.filter((c) => c !== factionName);
     }
     setSelectedFactionFilter(temp);
     sortBasedOnFactionAndClass(temp, selectedClassFilter);
