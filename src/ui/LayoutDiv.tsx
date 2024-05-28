@@ -10,8 +10,15 @@ import ArtifactInfoFetcher from "../libs/ArtifactInfoFetcher";
 import { appWindow, LogicalSize } from '@tauri-apps/api/window';
 import { appLocalDataDir } from '@tauri-apps/api/path';
 import { invoke } from '@tauri-apps/api/tauri'
-const appLocalDataDirPath = await appLocalDataDir();
+let appLocalDataDirPath: string | null = null;
 import Unit from "./Unit";
+
+async function getAppLocalDataDirPath() {
+  if (appLocalDataDirPath) return appLocalDataDirPath;
+
+  appLocalDataDirPath = await appLocalDataDir();
+  return appLocalDataDirPath;
+}
 
 export default function LayoutDiv() {
   const [listVisible, setListVisible] = useState<boolean>(true);
@@ -185,7 +192,8 @@ export default function LayoutDiv() {
                   ))}
                 </select>
                 <span className="layout-button" style={{ width: "125px" }} onClick={async () => {
-                  invoke("open_explorer_folder", { fullPath: appLocalDataDirPath.slice(0, -1) });
+                  let folderPath = await getAppLocalDataDirPath();
+                  invoke("open_explorer_folder", { fullPath: folderPath });
                 }}>Open data folder</span>
               </div>
             </div>

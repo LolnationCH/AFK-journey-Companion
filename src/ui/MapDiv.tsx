@@ -2,7 +2,6 @@ import Map from './Map';
 import GridCell, { EmptyGridCell } from './GridCell';
 import Unit from './Unit';
 import Loadout from './Loadout';
-import { useState } from 'react';
 
 function getLoadoutOnPosition(loadout: Loadout | null, x: number, y: number): Unit {
   // console.log(loadout);
@@ -11,7 +10,6 @@ function getLoadoutOnPosition(loadout: Loadout | null, x: number, y: number): Un
 
 export default function MapDiv(props: { map: Map, loadout: Loadout | null, modifyLoadout: (unit: Unit) => void }) {
   const { map, loadout, modifyLoadout } = props;
-  const [unitsState, setUnitsState] = useState<Unit[]>(loadout?.units || []);
 
   let modifyUnit = (unit: Unit) => {
     modifyLoadout(unit);
