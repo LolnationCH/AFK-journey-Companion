@@ -2,7 +2,7 @@ import { useEffect, useState, memo } from "react";
 import Layout from "./Layout";
 import LayoutFetcher from "../libs/LayoutsFetcher";
 import MapDiv from "./MapDiv";
-import Loadout from "./Loadout";
+import Loadout, { ArtifactType } from "./Loadout";
 
 import CharacterList from "./CharacterList";
 import ArtifactInfo from "../libs/ArtifactInfo";
@@ -169,6 +169,11 @@ export default function LayoutDiv() {
                       findArtifact = seasonalArtifacts.find((artifact) => artifact.name === e.target.value);
                     }
                     setSelectedArtifact(findArtifact || null);
+                    if (findArtifact && selectedLoadout) {
+                      let temp = selectedLoadout;
+                      temp.artifact = ArtifactType[findArtifact.name.toLowerCase() as keyof typeof ArtifactType];
+                      modifyLoadout(temp);
+                    }
                   }}
                   className="artifact-select"
                   style={{ maxHeight: "50%", alignSelf: "center" }}

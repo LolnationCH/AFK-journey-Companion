@@ -1,6 +1,6 @@
 import Unit from "./Unit";
 
-enum artifactType {
+export enum ArtifactType {
   ironwall = "IronWall",
   confining = "Confining",
   blazing = "Blazing",
@@ -22,9 +22,9 @@ export default class Loadout {
   units: Unit[];
   name: string;
   description: string;
-  artifact: artifactType;
+  artifact: ArtifactType;
 
-  constructor(units: Unit[], name: string, description: string, artifact: artifactType) {
+  constructor(units: Unit[], name: string, description: string, artifact: ArtifactType) {
     this.units = units;
     this.name = name;
     this.description = description;
@@ -32,7 +32,7 @@ export default class Loadout {
   }
 
   static newFromUi(name: string) {
-    return new Loadout([], name, "", artifactType.starshard);
+    return new Loadout([], name, "", ArtifactType.starshard);
   }
 
   static fromJson(json: any): Loadout {
