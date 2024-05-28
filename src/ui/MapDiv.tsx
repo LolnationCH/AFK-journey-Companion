@@ -4,16 +4,11 @@ import Unit from './Unit';
 import Loadout from './Loadout';
 
 function getLoadoutOnPosition(loadout: Loadout | null, x: number, y: number): Unit {
-  // console.log(loadout);
   return loadout?.units.find(unit => unit.positionX === x && unit.positionY === y) || new Unit("", 0, x, y);
 }
 
 export default function MapDiv(props: { map: Map, loadout: Loadout | null, modifyLoadout: (unit: Unit) => void }) {
   const { map, loadout, modifyLoadout } = props;
-
-  let modifyUnit = (unit: Unit) => {
-    modifyLoadout(unit);
-  }
 
   let i = 1;
   return (
@@ -24,7 +19,9 @@ export default function MapDiv(props: { map: Map, loadout: Loadout | null, modif
           <div key={y} style={{ marginLeft: `${y % 2 == 1 ? 0 : 40}px`, marginBottom: '-7px' }}>
             {new Array(cellToSkip).fill(0).map((_, i) => <EmptyGridCell key={i} />)}
             {row.map((_, x) => (
-              <GridCell key={x} i={i++} unit={getLoadoutOnPosition(loadout, x, y)} modifyUnit={modifyUnit} />
+              <GridCell key={x} i={i++}
+                unit={getLoadoutOnPosition(loadout, x, y)}
+                modifyUnit={modifyLoadout} />
             ))}
           </div>
         );

@@ -27,7 +27,8 @@
         "all": true
       },
       "window": {
-        "setSize": true
+        "setSize": true,
+        "setAlwaysOnTop": true
       }
     },
     "windows": [

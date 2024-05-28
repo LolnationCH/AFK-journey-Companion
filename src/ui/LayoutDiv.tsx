@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, memo } from "react";
 import Layout from "./Layout";
 import LayoutFetcher from "../libs/LayoutsFetcher";
 import MapDiv from "./MapDiv";
 import Loadout from "./Loadout";
 
-import { CharacterList } from "./CharacterList";
+import CharacterList from "./CharacterList";
 import ArtifactInfo from "../libs/ArtifactInfo";
 import ArtifactInfoFetcher from "../libs/ArtifactInfoFetcher";
 import { appWindow, LogicalSize } from '@tauri-apps/api/window';
@@ -23,12 +23,6 @@ async function getAppLocalDataDirPath() {
 export default function LayoutDiv() {
   const [listVisible, setListVisible] = useState<boolean>(true);
 
-  useEffect(() => {
-    LayoutFetcher.fetchLayouts().then((layoutsFetched) => {
-      setLayouts(layoutsFetched);
-    });
-  }, []);
-
   const [layouts, setLayouts] = useState<Layout[]>([]);
   const [selectedLayoutName, setSelectedLayoutName] = useState<string>("");
   const [selectedLayout, setSelectedLayout] = useState<Layout | null>(null);
@@ -39,6 +33,12 @@ export default function LayoutDiv() {
   const [artifacts, setArtifacts] = useState<ArtifactInfo[]>([]);
   const [seasonalArtifacts, setSeasonalArtifacts] = useState<ArtifactInfo[]>([]);
   const [selectedArtifact, setSelectedArtifact] = useState<ArtifactInfo | null>(null);
+
+  useEffect(() => {
+    LayoutFetcher.fetchLayouts().then((layoutsFetched) => {
+      setLayouts(layoutsFetched);
+    });
+  }, []);
 
   let modifyLoadout = (loadout: Loadout) => {
     if (!selectedLayout || !selectedLoadout) return;
@@ -117,13 +117,7 @@ export default function LayoutDiv() {
             <span>Layout Selection : </span>
             <select
               value={selectedLayoutName}
-              onChange={(e) => {
-                setSelectedLayoutName(e.target.value);
-                let layout = layouts.find((layout) => layout.name === e.target.value) || null;
-                setSelectedLayout(layout);
-                setLayout(layout?.loadouts[0] || null);
-                setSelectedLoadoutName(layout?.loadouts[0].name || "");
-              }}
+              onChange={onChangeLayoutSelection}
             >
               <option value="">Select a layout</option>
               {layouts.map((layout) => (
@@ -201,11 +195,19 @@ export default function LayoutDiv() {
         </div>
         <div style={{ visibility: listVisible ? "visible" : "hidden", width: listVisible ? "100%" : "0%", height: listVisible ? "100%" : "0%" }}>
           <h2>Characters Selection</h2>
-          {CharacterList()}
+          <CharacterList />
         </div>
       </div>
     </div>
   );
+
+  function onChangeLayoutSelection(e: React.ChangeEvent<HTMLSelectElement>) {
+    setSelectedLayoutName(e.target.value);
+    let layout = layouts.find((layout) => layout.name === e.target.value) || null;
+    setSelectedLayout(layout);
+    setLayout(layout?.loadouts[0] || null);
+    setSelectedLoadoutName(layout?.loadouts[0].name || "");
+  }
 
   function SetSelectedLayoutOnChange(name: string) {
     setSelectedLoadoutName(name);
@@ -233,3 +235,5 @@ export default function LayoutDiv() {
     });
   }
 }
+
+memo(LayoutDiv);

@@ -1,23 +1,29 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, memo } from "react";
 import CharacterInfoFetcher from "../libs/CharacterInfoFetcher";
 import CharacterInfo from "../libs/CharacterInfo";
+import FilterIcons from "./FilterIcons";
+import CharacterIcons from "./CharacterIcons";
 
-const factionToAbrev: { [key: string]: string; } = {
-  "cele": "Celestial",
-  "grave": "Graveborn",
-  "hypo": "Hypogean",
-  "light": "Lightbearer",
-  "mauler": "Mauler",
-  "wilder": "Wilder",
-};
-const classToAbrev: { [key: string]: string; } = {
-  "mage": "Mage",
-  "mark": "Marksman",
-  "rogue": "Rogue",
-  "support": "Support",
-  "tank": "Tank",
-  "warrior": "Warrior",
-};
+const factions = [
+  { name: "Celestial", image: "./img/factions/faction_cele.webp" },
+  { name: "Graveborn", image: "./img/factions/faction_grave.webp" },
+  { name: "Hypogean", image: "./img/factions/faction_hypo.webp" },
+  { name: "Lightbearer", image: "./img/factions/faction_light.webp" },
+  { name: "Mauler", image: "./img/factions/faction_mauler.webp" },
+  { name: "Wilder", image: "./img/factions/faction_wilder.webp" },
+  { name: "All", image: "./img/factions/faction_all.webp" },
+];
+
+const classes = [
+  { name: "Mage", image: "./img/class/class_mage.webp" },
+  { name: "Marksman", image: "./img/class/class_mark.webp" },
+  { name: "Rogue", image: "./img/class/class_rogue.webp" },
+  { name: "Support", image: "./img/class/class_support.webp" },
+  { name: "Tank", image: "./img/class/class_tank.webp" },
+  { name: "Warrior", image: "./img/class/class_warrior.webp" },
+  { name: "All", image: "./img/class/class_all.webp" },
+];
+
 function modifyCharacterList(characters: CharacterInfo[]) {
   // Check if characters already have the null character
   if (characters.length > 0 && characters[0].name === "") {
@@ -29,12 +35,12 @@ function modifyCharacterList(characters: CharacterInfo[]) {
   characters.sort((a, b) => a.name.localeCompare(b.name));
   return characters;
 }
-export function CharacterList() {
+function CharacterList() {
   const [characters, setCharacters] = useState<CharacterInfo[]>([]);
   const [charactersList, setCharactersList] = useState<CharacterInfo[]>([]);
   const [selectedCharacter, setSelectedCharacter] = useState<CharacterInfo | null>(null);
-  const [selectedFactionFilter, setSelectedFactionFilter] = useState<string>("");
-  const [selectedClassFilter, setSelectedClassFilter] = useState<string>("");
+  const [selectedFactionFilter, setSelectedFactionFilter] = useState<string[]>([]);
+  const [selectedClassFilter, setSelectedClassFilter] = useState<string[]>([]);
 
   useEffect(() => {
     if (charactersList.length > 0) {
@@ -49,58 +55,80 @@ export function CharacterList() {
     });
   }, []);
 
-  const sortBasedOnFaction = (factionName: string) => {
-    setSelectedFactionFilter(factionName);
-    sortBasedOnFactionAndClass(factionName, selectedClassFilter);
-  };
 
-  const sortBasedOnClass = (className: string) => {
-    setSelectedClassFilter(className);
-    sortBasedOnFactionAndClass(selectedFactionFilter, className);
-  };
+  const _sortBasedOnFactionAndClass = useCallback(sortBasedOnFactionAndClass(setSelectedFactionFilter, setSelectedClassFilter, charactersList, setCharacters), [setSelectedFactionFilter, setSelectedClassFilter, charactersList, setCharacters]);
+  const _sortBasedOnClass = useCallback(sortBasedOnClass(_sortBasedOnFactionAndClass, selectedFactionFilter, selectedClassFilter, setSelectedClassFilter), [_sortBasedOnFactionAndClass, selectedFactionFilter, selectedClassFilter, setSelectedClassFilter]);
+  const _sortBasedOnFaction = useCallback(sortBasedOnFaction(_sortBasedOnFactionAndClass, selectedClassFilter, selectedFactionFilter, setSelectedFactionFilter), [_sortBasedOnFactionAndClass, selectedClassFilter, selectedFactionFilter, setSelectedFactionFilter]);
 
-  const sortBasedOnFactionAndClass = (factionName: string, className: string) => {
-    setSelectedFactionFilter(factionName);
-    setSelectedClassFilter(className);
+  return (
+    <div style={{ overflow: "auto" }}>
+      <FilterIcons sortFunction={_sortBasedOnFaction} filter={selectedFactionFilter} items={factions} />
+      <FilterIcons sortFunction={_sortBasedOnClass} filter={selectedClassFilter} items={classes} />
+      <div>Currently selected character : {selectedCharacter?.name}</div>
+      <CharacterIcons characters={characters} setSelectedCharacter={setSelectedCharacter} />
+    </div>
+  );
+}
+
+function sortBasedOnFactionAndClass(
+  setSelectedFactionFilter: (factionNameFilter: string[]) => void,
+  setSelectedClassFilter: (classNameFilter: string[]) => void,
+  charactersList: CharacterInfo[],
+  setCharacters: (characters: CharacterInfo[]) => void) {
+  return (factionNameFilter: string[], classNameFilter: string[]) => {
+    setSelectedFactionFilter(factionNameFilter);
+    setSelectedClassFilter(classNameFilter);
 
     let filteredCharacters = charactersList.filter((character) => {
-      const factionMatch = factionName === "" || character.type === factionToAbrev[factionName];
-      const classMatch = className === "" || character.class === classToAbrev[className];
-      return factionMatch && classMatch;
+      if (factionNameFilter.length > 0 && !factionNameFilter.includes(character.type)) {
+        return false;
+      }
+      if (classNameFilter.length > 0 && !classNameFilter.includes(character.class)) {
+        return false;
+      }
+      return true;
     });
 
     setCharacters(modifyCharacterList(filteredCharacters));
   };
-
-  return (
-    <div style={{ overflow: "auto" }}>
-      <div>
-        <div className="faction-icon" onClick={() => sortBasedOnFaction("cele")}><img src="./img/factions/faction_cele.webp"></img></div>
-        <div className="faction-icon" onClick={() => sortBasedOnFaction("grave")}><img src="./img/factions/faction_grave.webp"></img></div>
-        <div className="faction-icon" onClick={() => sortBasedOnFaction("hypo")}> <img src="./img/factions/faction_hypo.webp"></img></div>
-        <div className="faction-icon" onClick={() => sortBasedOnFaction("light")}> <img src="./img/factions/faction_light.webp"></img></div>
-        <div className="faction-icon" onClick={() => sortBasedOnFaction("mauler")}><img src="./img/factions/faction_mauler.webp"></img></div>
-        <div className="faction-icon" onClick={() => sortBasedOnFaction("wilder")}><img src="./img/factions/faction_wilder.webp"></img></div>
-        <div className="faction-icon" onClick={() => { setSelectedFactionFilter(""); sortBasedOnFactionAndClass("", selectedClassFilter) }}><img src="./img/factions/faction_all.webp"></img></div>
-        <span>Currently selected character : {selectedCharacter?.name}</span>
-      </div>
-      <div>
-        <div className="faction-icon" onClick={() => sortBasedOnClass("mage")}><img src="./img/class/class_mage.webp"></img></div>
-        <div className="faction-icon" onClick={() => sortBasedOnClass("mark")}><img src="./img/class/class_mark.webp"></img></div>
-        <div className="faction-icon" onClick={() => sortBasedOnClass("rogue")}><img src="./img/class/class_rogue.webp"></img></div>
-        <div className="faction-icon" onClick={() => sortBasedOnClass("support")}><img src="./img/class/class_support.webp"></img></div>
-        <div className="faction-icon" onClick={() => sortBasedOnClass("tank")}><img src="./img/class/class_tank.webp"></img></div>
-        <div className="faction-icon" onClick={() => sortBasedOnClass("warrior")}><img src="./img/class/class_warrior.webp"></img></div>
-        <div className="faction-icon" onClick={() => { setSelectedClassFilter(""); sortBasedOnFactionAndClass(selectedFactionFilter, "") }}><img src="./img/class/class_all.webp"></img></div>
-      </div>
-      {characters.map((character, _) => (
-        <div key={character.id} className="characters-cell" onClick={() => {
-          CharacterInfoFetcher.selectCharacterInfo(character.name);
-          setSelectedCharacter(character);
-        }}>
-          <img src={`./img/characters/${character.id}_sm.webp`} alt={character.name} style={{ maxHeight: "80px" }} />
-        </div>
-      ))}
-    </div>
-  );
 }
+
+function sortBasedOnClass(
+  sortBasedOnFactionAndClass: (factionNameFilter: string[], classNameFilter: string[]) => void,
+  selectedFactionFilter: string[],
+  selectedClassFilter: string[],
+  setSelectedClassFilter: (classNameFilter: string[]) => void) {
+  return (className: string) => {
+    if (className === "All") {
+      sortBasedOnFactionAndClass(selectedFactionFilter, []);
+      return;
+    }
+    let temp = [...selectedClassFilter];
+    if (!temp.includes(className)) {
+      temp.push(className);
+    }
+    setSelectedClassFilter(temp);
+    sortBasedOnFactionAndClass(selectedFactionFilter, temp);
+  };
+}
+
+function sortBasedOnFaction(
+  sortBasedOnFactionAndClass: (factionNameFilter: string[], classNameFilter: string[]) => void,
+  selectedClassFilter: string[],
+  selectedFactionFilter: string[],
+  setSelectedFactionFilter: (factionNameFilter: string[]) => void) {
+  return (factionName: string) => {
+    if (factionName === "All") {
+      sortBasedOnFactionAndClass([], selectedClassFilter);
+      return;
+    }
+    let temp = [...selectedFactionFilter];
+    if (!temp.includes(factionName)) {
+      temp.push(factionName);
+    }
+    setSelectedFactionFilter(temp);
+    sortBasedOnFactionAndClass(temp, selectedClassFilter);
+  };
+}
+
+export default memo(CharacterList);
