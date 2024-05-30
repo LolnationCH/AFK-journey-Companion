@@ -12,6 +12,7 @@ import { appLocalDataDir } from '@tauri-apps/api/path';
 import { invoke } from '@tauri-apps/api/tauri'
 let appLocalDataDirPath: string | null = null;
 import Unit from "./Unit";
+import CharacterInfoFetcher from "../libs/CharacterInfoFetcher";
 
 async function getAppLocalDataDirPath() {
   if (appLocalDataDirPath) return appLocalDataDirPath;
@@ -154,6 +155,8 @@ export default function LayoutDiv() {
                 <span className="layout-button" onClick={() => {
                   if (!selectedLayout || !selectedLoadout) return;
                   LayoutFetcher.saveLayout(selectedLayout);
+                  ArtifactInfoFetcher.saveArtifactInfo();
+                  CharacterInfoFetcher.saveCharacterInfo();
                 }}>Save 💾</span>
                 <span className="layout-button" onClick={toggleListVisibility}>Toggle list</span>
               </div>

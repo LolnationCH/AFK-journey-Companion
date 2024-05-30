@@ -14,4 +14,11 @@ export default class ArtifactInfo {
   static fromJsonArray(json: any): ArtifactInfo[] {
     return json.map(ArtifactInfo.fromJson);
   }
+
+  toJson(): any {
+    return {
+      id: this.id,
+      name: this.name
+    };
+  }
 }

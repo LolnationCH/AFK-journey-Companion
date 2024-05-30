@@ -18,4 +18,13 @@ export default class CharacterInfo {
   static fromJsonArray(json: any[]): CharacterInfo[] {
     return json.map(CharacterInfo.fromJson);
   }
+
+  toJson(): any {
+    return {
+      name: this.name,
+      id: this.id,
+      class: this.class,
+      type: this.type
+    };
+  }
 }

@@ -1,9 +1,29 @@
 import Layout from "../ui/Layout";
 import { join } from '@tauri-apps/api/path';
 import { writeTextFile, BaseDirectory, createDir, readTextFile, exists } from '@tauri-apps/api/fs';
+import { invoke } from '@tauri-apps/api/tauri'
+import { appLocalDataDir } from '@tauri-apps/api/path';
+
+let appLocalDataDirPath: string | null = null;
+
+
+async function getAppLocalDataDirPath() {
+  if (appLocalDataDirPath) return appLocalDataDirPath;
+
+  appLocalDataDirPath = await appLocalDataDir();
+  return appLocalDataDirPath;
+}
 
 export default class LayoutFetcher {
   static fetchLayouts(): Promise<Layout[]> {
+
+    getAppLocalDataDirPath().then((path) => {
+      invoke("get_layouts", { folderPath: path }).then((response) => {
+        console.log(response);
+      });
+    });
+
+
     return fetch("./layouts/index.json")
       .then((response) => response.json())
       .then((data) => {
