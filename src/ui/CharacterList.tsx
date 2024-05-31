@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, memo } from "react";
+import { useEffect, useState, memo } from "react";
 import CharacterInfoFetcher from "../libs/CharacterInfoFetcher";
 import CharacterInfo from "../libs/CharacterInfo";
 import FilterIcons from "./FilterIcons";
@@ -56,9 +56,9 @@ function CharacterList() {
   }, []);
 
 
-  const _sortBasedOnFactionAndClass = useCallback(sortBasedOnFactionAndClass(setSelectedFactionFilter, setSelectedClassFilter, charactersList, setCharacters), [setSelectedFactionFilter, setSelectedClassFilter, charactersList, setCharacters]);
-  const _sortBasedOnClass = useCallback(sortBasedOnClass(_sortBasedOnFactionAndClass, selectedFactionFilter, selectedClassFilter, setSelectedClassFilter), [_sortBasedOnFactionAndClass, selectedFactionFilter, selectedClassFilter, setSelectedClassFilter]);
-  const _sortBasedOnFaction = useCallback(sortBasedOnFaction(_sortBasedOnFactionAndClass, selectedClassFilter, selectedFactionFilter, setSelectedFactionFilter), [_sortBasedOnFactionAndClass, selectedClassFilter, selectedFactionFilter, setSelectedFactionFilter]);
+  const _sortBasedOnFactionAndClass = sortBasedOnFactionAndClass(setSelectedFactionFilter, setSelectedClassFilter, charactersList, setCharacters);
+  const _sortBasedOnClass = sortBasedOnClass(_sortBasedOnFactionAndClass, selectedFactionFilter, selectedClassFilter, setSelectedClassFilter);
+  const _sortBasedOnFaction = sortBasedOnFaction(_sortBasedOnFactionAndClass, selectedClassFilter, selectedFactionFilter, setSelectedFactionFilter);
 
   return (
     <div style={{ overflow: "auto" }}>
