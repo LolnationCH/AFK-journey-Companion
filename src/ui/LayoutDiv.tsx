@@ -213,6 +213,10 @@ export default function LayoutDiv() {
     setSelectedLayoutName(e.target.value);
     let layout = layouts.find((layout) => layout.name === e.target.value) || null;
     setSelectedLayout(layout);
+    if (!layout) return;
+
+    if (!layout.loadouts || layout.loadouts.length === 0) { return; }
+
     setLayout(layout?.loadouts[0] || null);
     setSelectedLoadoutName(layout?.loadouts[0].name || "");
   }

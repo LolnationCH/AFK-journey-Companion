@@ -15,42 +15,33 @@ async function getAppLocalDataDirPath() {
 }
 
 export default class LayoutFetcher {
-  static fetchLayouts(): Promise<Layout[]> {
+  static async fetchLayouts(): Promise<Layout[]> {
+    const response = await fetch("./layouts/index.json");
+    const data: string[] = await response.json();
 
-    getAppLocalDataDirPath().then((path) => {
-      invoke("get_layouts", { folderPath: path }).then((response) => {
-        console.log(response);
-      });
-    });
+    const path = await getAppLocalDataDirPath();
+    const localLayouts = await invoke("get_layouts", { folderPath: path });
+    let layoutsFiles = data.concat(localLayouts as string[]);
+    layoutsFiles = [...new Set(layoutsFiles)];
 
+    const layouts = await Promise.all(layoutsFiles.map(async (x: string) => {
+      const path = await join("layouts", `${x}`);
+      const doesFileExist = await exists(path, { dir: BaseDirectory.AppLocalData });
 
-    return fetch("./layouts/index.json")
-      .then((response) => response.json())
-      .then((data) => {
-        return Promise.all(data.map((x: string) => {
-          return join("layouts", `${x}`).then((path) => {
-            return exists(path, { dir: BaseDirectory.AppLocalData }).then((exists) => {
-              if (!exists) {
-                return fetch(`./layouts/${x}`)
-                  .then((response) => response.json())
-                  .then((data) => {
-                    return Layout.fromJson(data);
-                  });
-              }
-              else {
-                return readTextFile(path, { dir: BaseDirectory.AppLocalData }).then((data) => {
-                  return Layout.fromJson(JSON.parse(data));
-                });
-              }
-            });
-          });
-        }));
-      });
+      if (!doesFileExist) {
+        const response = await fetch(`./layouts/${x}`);
+        const data = await response.json();
+        return Layout.fromJson(data);
+      } else {
+        const data = await readTextFile(path, { dir: BaseDirectory.AppLocalData });
+        return Layout.fromJson(JSON.parse(data));
+      }
+    }));
+
+    return layouts;
   }
 
   static async saveLayout(layout: Layout) {
-    console.log({ "save": "save", layout });
-    // Save the layout to the local data directory
     return join("layouts", `${layout.filename}.json`).then((path) => {
       createDir("layouts", { dir: BaseDirectory.AppLocalData, recursive: true }).then(() => {
         return writeTextFile(path, JSON.stringify(layout.toJson()), { dir: BaseDirectory.AppLocalData })
