@@ -8,18 +8,10 @@ import CharacterList from "./CharacterList";
 import ArtifactInfo from "../libs/ArtifactInfo";
 import ArtifactInfoFetcher from "../libs/ArtifactInfoFetcher";
 import { appWindow, LogicalSize } from '@tauri-apps/api/window';
-import { appLocalDataDir } from '@tauri-apps/api/path';
 import { invoke } from '@tauri-apps/api/tauri'
-let appLocalDataDirPath: string | null = null;
 import Unit from "./Unit";
 import CharacterInfoFetcher from "../libs/CharacterInfoFetcher";
-
-async function getAppLocalDataDirPath() {
-  if (appLocalDataDirPath) return appLocalDataDirPath;
-
-  appLocalDataDirPath = await appLocalDataDir();
-  return appLocalDataDirPath;
-}
+import getAppLocalDataDirPath from "./LocalDataDirPath";
 
 export default function LayoutDiv() {
   const [listVisible, setListVisible] = useState<boolean>(true);

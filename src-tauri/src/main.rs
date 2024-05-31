@@ -24,8 +24,7 @@ fn get_layouts(folder_path: &str) -> Vec<String> {
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![open_explorer_folder])
-        .invoke_handler(tauri::generate_handler![get_layouts])
+        .invoke_handler(tauri::generate_handler![open_explorer_folder, get_layouts])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

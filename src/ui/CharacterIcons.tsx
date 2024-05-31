@@ -1,6 +1,7 @@
 import { memo } from "react";
 import CharacterInfo from "../libs/CharacterInfo";
 import CharacterInfoFetcher from "../libs/CharacterInfoFetcher";
+import CharacterImage from "./CharacterImage";
 
 function CharacterIcons(props: { characters: CharacterInfo[], setSelectedCharacter: (character: CharacterInfo) => void }) {
   const { characters, setSelectedCharacter } = props;
@@ -16,11 +17,7 @@ function CharacterIcons(props: { characters: CharacterInfo[], setSelectedCharact
             setSelectedCharacter(character);
           }}
         >
-          <img
-            src={`./img/characters/${character.id}_sm.webp`}
-            alt={character.name}
-            style={{ maxHeight: "80px" }}
-          />
+          <CharacterImage imageId={character.id} alt={character.name} style={{ maxHeight: "80px" }} />
         </div>
       ))}
     </>
