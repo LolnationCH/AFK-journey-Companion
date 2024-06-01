@@ -12,6 +12,7 @@ import { invoke } from '@tauri-apps/api/tauri'
 import Unit from "./Unit";
 import CharacterInfoFetcher from "../libs/CharacterInfoFetcher";
 import getAppLocalDataDirPath from "./LocalDataDirPath";
+import ArtifactImage from "./ArtifactImage";
 
 export default function LayoutDiv() {
   const [listVisible, setListVisible] = useState<boolean>(true);
@@ -155,7 +156,7 @@ export default function LayoutDiv() {
               <p></p>
               <MapDiv map={selectedLayout.map} loadout={selectedLoadout} modifyLoadout={modifyLoadoutUnit} />
               <div style={{ display: "grid", gridTemplateColumns: "100px 1fr" }}>
-                <img src={`./img/artifacts/arti_${selectedArtifact?.id}.webp`} title={`${selectedArtifact?.name}`} />
+                <ArtifactImage imageId={`arti_${selectedArtifact?.id}`} title={selectedArtifact?.name} />
                 <select
                   value={selectedArtifact?.name}
                   onChange={(e) => {
