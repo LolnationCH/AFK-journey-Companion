@@ -131,6 +131,10 @@ h2 {
   text-align: center;
 }
 
+#layoutDiv {
+  min-width: 480px
+}
+
 .div-link {
   color: #f6b73c;
   text-decoration: underline;

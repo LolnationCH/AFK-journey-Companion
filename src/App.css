@@ -65,6 +65,42 @@ Note: Beware of modifying this element as it can break the animations - you shou
   background: rgba(0, 0, 0, 0.3);
 }
 
+.reset-button {
+  background: #f8c0ae;
+  color: #373a47;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.backup-button {
+  background: #f6f33c;
+  color: #373a47;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.restore-button {
+  background: #3cf667;
+  color: #373a47;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.open-data-button {
+  background: #3cf6f6;
+  color: #373a47;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px;
+  cursor: pointer;
+}
+
 @media (prefers-color-scheme: dark) {
   .bm-burger-bars {
     background: #f6b73c;

@@ -9,6 +9,7 @@ const Icon = memo((props: { name: string, image: string, filter: string[] }) => 
           border: props.filter.includes(props.name) ? "1px solid #d89bdf" : "",
         }}
         src={props.image}
+        title={props.name}
         alt={props.name} />
     </>
   );

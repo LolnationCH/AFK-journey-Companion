@@ -12,10 +12,13 @@
   "dependencies": {
     "@million/lint": "^1.0.0-rc.13",
     "@tauri-apps/api": "^1",
+    "@uidotdev/usehooks": "^2.4.1",
     "million": "^3.1.6",
     "react": "^18.2.0",
     "react-burger-menu": "^3.0.9",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.23.1",
+    "react-toastify": "^10.0.5"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1",

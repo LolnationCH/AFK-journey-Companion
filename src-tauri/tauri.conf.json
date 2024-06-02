@@ -16,6 +16,14 @@
         "all": false,
         "open": true
       },
+      "dialog": {
+        "all": false,
+        "ask": true,
+        "confirm": true,
+        "message": true,
+        "open": false,
+        "save": false
+      },
       "fs": {
         "all": true,
         "scope": [
@@ -36,7 +44,8 @@
         "title": "afk-journey-companion",
         "width": 1300,
         "height": 800,
-        "transparent": true
+        "transparent": true,
+        "theme": "Dark"
       }
     ],
     "security": {

@@ -1,6 +1,6 @@
 import Layout from "../models/Layout";
 import { join } from '@tauri-apps/api/path';
-import { writeTextFile, BaseDirectory, createDir, readTextFile, exists } from '@tauri-apps/api/fs';
+import { writeTextFile, BaseDirectory, createDir, readTextFile, exists, } from '@tauri-apps/api/fs';
 import { invoke } from '@tauri-apps/api/tauri';
 import getAppLocalDataDirPath from "../ui/builds-composition/LocalDataDirPath";
 
@@ -37,5 +37,20 @@ export default class LayoutFetcher {
         return writeTextFile(path, JSON.stringify(layout.toJson()), { dir: BaseDirectory.AppLocalData })
       });
     });
+  }
+
+  static async deleteLayouts() {
+    const path = await getAppLocalDataDirPath();
+    return invoke("delete_layouts", { folderPath: path });
+  }
+
+  static async backupLayouts() {
+    const path = await getAppLocalDataDirPath();
+    return invoke("backup_layouts", { folderPath: path });
+  }
+
+  static async restoreLayouts() {
+    const path = await getAppLocalDataDirPath();
+    return invoke("apply_backup_layouts", { folderPath: path });
   }
 }
