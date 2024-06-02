@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, memo } from "react";
-import CharacterInfoFetcher from "../libs/CharacterInfoFetcher";
+import CharacterInfoFetcher from "../../libs/CharacterInfoFetcher";
 import { BaseDirectory, readBinaryFile, exists } from '@tauri-apps/api/fs';
-import Unit from "./Unit";
+import Unit from "../../models/Unit";
 
 function DivImage(props: { unitId: string, onClickCell: () => void, content: string }) {
   const { unitId, onClickCell, content } = props;

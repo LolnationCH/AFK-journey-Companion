@@ -1,6 +1,6 @@
 import { useEffect, useState, memo } from "react";
-import CharacterInfoFetcher from "../libs/CharacterInfoFetcher";
-import CharacterInfo from "../libs/CharacterInfo";
+import CharacterInfoFetcher from "../../libs/CharacterInfoFetcher";
+import CharacterInfo from "../../models/CharacterInfo";
 import FilterIcons from "./FilterIcons";
 import CharacterIcons from "./CharacterIcons";
 
@@ -43,7 +43,7 @@ function CharacterList() {
   const [selectedClassFilter, setSelectedClassFilter] = useState<string[]>([]);
 
   useEffect(() => {
-    if (charactersList.length > 0) {
+    if (characters.length > 0) {
       let characters = modifyCharacterList(charactersList);
       setCharacters(characters);
       return;

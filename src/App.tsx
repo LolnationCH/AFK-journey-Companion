@@ -1,5 +1,5 @@
 import "./App.css";
-import LayoutDiv from "./ui/LayoutDiv";
+import LayoutDiv from "./ui/builds-composition/LayoutDiv";
 import { appWindow } from '@tauri-apps/api/window';
 import { useEffect } from "react";
 import Footer from "./Footer";

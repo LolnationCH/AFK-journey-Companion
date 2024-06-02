@@ -1,7 +1,7 @@
-import Map from './Map';
+import Map from '../../models/Map';
 import GridCell, { EmptyGridCell } from './GridCell';
-import Unit from './Unit';
-import Loadout from './Loadout';
+import Unit from '../../models/Unit';
+import Loadout from '../../models/Loadout';
 
 function getLoadoutOnPosition(loadout: Loadout | null, x: number, y: number): Unit {
   return loadout?.units.find(unit => unit.positionX === x && unit.positionY === y) || new Unit("", 0, x, y);
@@ -18,11 +18,17 @@ export default function MapDiv(props: { map: Map, loadout: Loadout | null, modif
         return (
           <div key={y} style={{ marginLeft: `${y % 2 == 1 ? 0 : 40}px`, marginBottom: '-7px' }}>
             {new Array(cellToSkip).fill(0).map((_, i) => <EmptyGridCell key={i} />)}
-            {row.map((_, x) => (
-              <GridCell key={x} i={i++}
-                unit={getLoadoutOnPosition(loadout, x, y)}
-                modifyUnit={modifyLoadout} />
-            ))}
+            {row.map((value, x) => {
+              if (value !== 0) {
+                return <EmptyGridCell key={x} />;
+              }
+              return (
+                <GridCell key={x} i={i++}
+                  unit={getLoadoutOnPosition(loadout, x, y)}
+                  modifyUnit={modifyLoadout} />
+              )
+            }
+            )}
           </div>
         );
       }

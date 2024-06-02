@@ -1,4 +1,4 @@
-import CharacterInfo from "./CharacterInfo";
+import CharacterInfo from "../models/CharacterInfo";
 import { join } from '@tauri-apps/api/path';
 import { writeTextFile, BaseDirectory, createDir, readTextFile, exists } from '@tauri-apps/api/fs';
 

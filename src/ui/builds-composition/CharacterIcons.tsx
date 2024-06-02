@@ -1,6 +1,6 @@
 import { memo } from "react";
-import CharacterInfo from "../libs/CharacterInfo";
-import CharacterInfoFetcher from "../libs/CharacterInfoFetcher";
+import CharacterInfo from "../../models/CharacterInfo";
+import CharacterInfoFetcher from "../../libs/CharacterInfoFetcher";
 import CharacterImage from "./CharacterImage";
 
 function CharacterIcons(props: { characters: CharacterInfo[], setSelectedCharacter: (character: CharacterInfo) => void }) {

@@ -1,16 +1,16 @@
 import { useEffect, useState, memo } from "react";
-import Layout from "./Layout";
-import LayoutFetcher from "../libs/LayoutsFetcher";
+import Layout from "../../models/Layout";
+import LayoutFetcher from "../../libs/LayoutsFetcher";
 import MapDiv from "./MapDiv";
-import Loadout, { ArtifactType } from "./Loadout";
+import Loadout, { ArtifactType } from "../../models/Loadout";
 
 import CharacterList from "./CharacterList";
-import ArtifactInfo from "../libs/ArtifactInfo";
-import ArtifactInfoFetcher from "../libs/ArtifactInfoFetcher";
+import ArtifactInfo from "../../models/ArtifactInfo";
+import ArtifactInfoFetcher from "../../libs/ArtifactInfoFetcher";
 import { appWindow, LogicalSize } from '@tauri-apps/api/window';
 import { invoke } from '@tauri-apps/api/tauri'
-import Unit from "./Unit";
-import CharacterInfoFetcher from "../libs/CharacterInfoFetcher";
+import Unit from "../../models/Unit";
+import CharacterInfoFetcher from "../../libs/CharacterInfoFetcher";
 import getAppLocalDataDirPath from "./LocalDataDirPath";
 import ArtifactImage from "./ArtifactImage";
 

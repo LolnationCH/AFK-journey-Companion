@@ -1,8 +1,8 @@
-import Layout from "../ui/Layout";
+import Layout from "../models/Layout";
 import { join } from '@tauri-apps/api/path';
 import { writeTextFile, BaseDirectory, createDir, readTextFile, exists } from '@tauri-apps/api/fs';
 import { invoke } from '@tauri-apps/api/tauri';
-import getAppLocalDataDirPath from "../ui/LocalDataDirPath";
+import getAppLocalDataDirPath from "../ui/builds-composition/LocalDataDirPath";
 
 export default class LayoutFetcher {
   static async fetchLayouts(): Promise<Layout[]> {

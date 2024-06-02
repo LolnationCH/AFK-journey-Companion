@@ -1,4 +1,4 @@
-import ArtifactInfo from "./ArtifactInfo";
+import ArtifactInfo from "../models/ArtifactInfo";
 import { join } from '@tauri-apps/api/path';
 import { writeTextFile, BaseDirectory, createDir, readTextFile, exists } from '@tauri-apps/api/fs';
 
